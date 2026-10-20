@@ -1,0 +1,319 @@
+{
+  "info": {
+    "name": "API Libertadores",
+    "description": "Pruebas de rutas, parámetros y códigos de estado de la API de clubes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar países - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paises"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200', function () { pm.response.to.have.status(200); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar país existente - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paises/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200', function () { pm.response.to.have.status(200); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar país con ID inválido - 400",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paises/abc"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 400 y entrega error', function () { pm.response.to.have.status(400); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar país inexistente - 404",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paises/999"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 404 y entrega error', function () { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar clubes - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200', function () { pm.response.to.have.status(200); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filtrar clubes por país - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes?pais=Argentina"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200 y encuentra clubes', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array').that.is.not.empty; });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filtrar país sin distinguir mayúsculas - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes?pais=argentina"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200', function () { pm.response.to.have.status(200); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filtrar país inexistente - 404",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes?pais=Inexistente"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 404 y entrega error', function () { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filtrar parámetro país vacío - 400",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes?pais="
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 400 y entrega error', function () { pm.response.to.have.status(400); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar club existente - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200', function () { pm.response.to.have.status(200); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar club con ID inválido - 400",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes/abc"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 400 y entrega error', function () { pm.response.to.have.status(400); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar club inexistente - 404",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/clubes/999"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 404 y entrega error', function () { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar clubes de país existente - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paises/1/clubes"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200 con los clubes del país', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array').that.is.not.empty; });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar clubes de país inexistente - 404",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/paises/999/clubes"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 404 y entrega error', function () { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar títulos de club con títulos - 200",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/titulos/1"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 200 con una lista de títulos', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an('array').that.is.not.empty; });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar títulos de club sin títulos - 200 y []",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/titulos/10"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Club existe y responde 200 con array vacío', function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.eql([]); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar títulos con ID inválido - 400",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/titulos/abc"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 400 y entrega error', function () { pm.response.to.have.status(400); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar títulos de club inexistente - 404",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/titulos/999"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 404 y entrega error', function () { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ruta inexistente - 404",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/ruta-que-no-existe"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Responde 404 y entrega error', function () { pm.response.to.have.status(404); pm.expect(pm.response.json()).to.have.property('error'); });"]
+          }
+        }
+      ]
+    }
+  ]
+}
